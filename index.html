@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerPath AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Inter:wght@400;500;600&family=Readex+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#10262B;--ink2:#4A5F63;--paper:#F4EFE3;--card:#fff;--teal:#0E5A5A;--mint:#E3EEE9;--sand:#EBC98A;--sand-l:#F1DDB4;--line:#D9D4C7;--bad:#B3402A;--good:#1B7A4B;
+    --head:'Outfit','Readex Pro',Arial,sans-serif;--body:'Inter','Readex Pro',Arial,sans-serif}
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+  [dir=rtl] body,[dir=rtl]{--head:'Readex Pro','Outfit',Arial,sans-serif;--body:'Readex Pro','Inter',Arial,sans-serif}
+  h1,h2,h3,p,ul,ol{margin:0}
+  a{color:var(--teal)}
+  :focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+  header{background:var(--teal);color:#fff}
+  .top{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+  .logo{font-family:var(--head);font-weight:800;font-size:1.25rem}
+  .logo i{font-style:normal;color:var(--sand)}
+  .lang{border:1.5px solid rgba(255,255,255,.6);background:none;color:#fff;border-radius:99px;padding:8px 18px;font:600 .9rem var(--body);cursor:pointer}
+  .lang:hover{background:#fff;color:var(--teal)}
+  .hero{padding:clamp(28px,6vw,64px) 0 clamp(40px,7vw,80px)}
+  h1{font-family:var(--head);font-weight:800;font-size:clamp(2.2rem,5.4vw,4rem);line-height:1.08;letter-spacing:-.02em;max-width:18ch}
+  .sub{margin-top:16px;max-width:54ch;color:#D5E6E1}
+  main{margin-top:-34px;padding-bottom:36px}
+  .panel{background:var(--card);border-radius:28px;padding:clamp(20px,4vw,40px);box-shadow:0 24px 60px rgba(14,90,90,.16)}
+  .grid{display:grid;grid-template-columns:1fr;gap:20px}
+  label.lbl,.lbl{display:block;font-weight:600;margin-bottom:8px}
+  .drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;min-height:200px;border:2px dashed var(--teal);border-radius:16px;background:var(--mint);color:var(--teal);cursor:pointer;padding:20px;transition:background .2s,border-color .2s}
+  .drop:hover,.drop.over{background:#D2E5DE}
+  .drop small{color:var(--ink2)}
+  .file{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--sand-l);font-weight:600}
+  .file[hidden]{display:none}
+  .fname{overflow-wrap:anywhere}
+  .x{border:0;background:#fff;border-radius:99px;padding:5px 14px;font:600 .85rem var(--body);cursor:pointer;color:var(--bad)}
+  textarea{width:100%;min-height:230px;resize:vertical;border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;font:inherit;font-size:1rem;color:var(--ink);background:#FFFDF8}
+  textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,90,90,.15)}
+  .count{font-size:.85rem;color:var(--ink2);margin-top:6px}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px;align-items:center}
+  .btn{border:0;border-radius:99px;padding:15px 30px;font:700 1rem var(--body);cursor:pointer;transition:transform .2s,background .2s}
+  .btn:hover:not(:disabled){transform:translateY(-2px)}
+  .btn.primary{background:var(--teal);color:#fff}
+  .btn.primary:hover:not(:disabled){background:var(--ink)}
+  .btn.ghost{background:var(--mint);color:var(--teal)}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .err{margin-top:16px;padding:12px 16px;border-radius:12px;background:#FBE6E1;color:var(--bad);font-weight:500}
+  .err[hidden],#result[hidden]{display:none}
+  .badge{display:inline-block;margin-inline-start:6px;background:var(--sand-l);padding:3px 12px;border-radius:99px;font-size:.8rem;font-weight:600}
+  #result{margin-top:34px}
+  .top-res{display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,4vw,36px);align-items:center;background:var(--mint);border-radius:24px;padding:clamp(18px,3vw,30px)}
+  .ring{--p:0;width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--teal) calc(var(--p)*1%),#fff 0);display:grid;place-items:center}
+  .ring span{width:98px;height:98px;border-radius:50%;background:var(--mint);display:grid;place-items:center;font:800 1.9rem var(--head)}
+  .top-res h2{font-family:var(--head);font-size:1.5rem}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{background:#fff;border-radius:99px;padding:5px 14px;font-size:.9rem;font-weight:500}
+  h3.sec{font-family:var(--head);font-size:1.6rem;margin:34px 0 14px}
+  .gap{border:1.5px solid var(--line);border-radius:20px;padding:20px;margin-bottom:14px}
+  .gap-h{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .gap-h b{font-family:var(--head);font-size:1.2rem}
+  .imp{font-size:.8rem;font-weight:700;padding:3px 12px;border-radius:99px;background:var(--sand-l)}
+  .imp.high{background:#F6D5CC;color:var(--bad)}
+  .gap p{color:var(--ink2);margin:8px 0 12px}
+  .res{list-style:none;padding:0;display:grid;gap:8px}
+  .res a{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:11px 14px;background:#FFFDF8;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink);transition:border-color .2s,background .2s}
+  .res a:hover{border-color:var(--teal);background:var(--mint)}
+  .res a b{font-weight:600}
+  .res small{color:var(--ink2)}
+  .tag{font-size:.75rem;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--mint);color:var(--teal)}
+  .noreal{color:var(--ink2);font-size:.92rem}
+  ol.path{list-style:none;padding:0;position:relative;display:grid;gap:14px}
+  ol.path li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+  ol.path .n{width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font:700 1.1rem var(--head)}
+  ol.path b{font-family:var(--head)}
+  ol.path span{color:var(--ink2);font-size:.92rem}
+  .loading{display:none;margin-top:18px;color:var(--ink2)}
+  .loading.on{display:flex;gap:12px;align-items:center}
+  .spin{width:20px;height:20px;border:3px solid var(--mint);border-top-color:var(--teal);border-radius:50%;animation:s 1s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+  footer{text-align:center;color:var(--ink2);font-size:.9rem;padding:0 0 40px}
+  @media(max-width:760px){.top-res{grid-template-columns:1fr;justify-items:center;text-align:center}.chips{justify-content:center}}
+  @media(prefers-reduced-motion:reduce){.spin{animation:none}.btn{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top"><div class="logo">CareerPath <i>AI</i></div><button class="lang" id="lang" type="button">العربية</button></div>
+    <div class="hero">
+      <h1 id="t-h1"></h1>
+      <p class="sub" id="t-sub"></p>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="panel" aria-label="Analyzer">
+    <div class="grid">
+      <div>
+        <span class="lbl" id="t-cv"></span>
+        <label class="drop" id="drop" for="cvfile" tabindex="0">
+          <input type="file" id="cvfile" accept=".pdf,application/pdf,.txt,text/plain" hidden>
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 17v-6M9.5 13.5 12 11l2.5 2.5"/></svg>
+          <b id="t-drop"></b><small id="t-drop2"></small>
+        </label>
+        <div class="file" id="fileinfo" hidden><span class="fname" id="fname"></span><button type="button" class="x" id="fx"></button></div>
+      </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="go" type="button"></button>
+      <button class="btn ghost" id="demo" type="button"></button>
+    </div>
+    <div class="loading" id="loading" role="status"><span class="spin"></span><span id="t-load"></span></div>
+    <div class="err" id="err" role="alert" hidden></div>
+    <div id="result" hidden></div>
+  </section>
+</main>
+<footer id="t-foot"></footer>
+
+<script>
+const I18N={
+ en:{h1:'Find your skill gaps. Get a path with real courses.',sub:'Upload your CV. CareerPath AI reads it, works out your field and the role you can aim for, and shows what is missing and where to learn it. It is built for technical fields (software, data, AI, cybersecurity, networks) and recommends courses from Saudi platforms.',
+  cv:'Your CV',drop:'Drop your CV here, or click to choose',drop2:'PDF or TXT, up to 3.5 MB',remove:'Remove',bigFile:'This file is larger than 3.5 MB.',badType:'Please choose a PDF or TXT file.',noCv:'Please add your CV file first.',go:'Analyze',demo:'See a sample result',
+  load:'Analyzing and searching for real courses. This can take up to a minute…',fail:'Could not analyze right now. Please try again.',unsupported:'This CV looks like it is in a non-technical field',unsupported2:'CareerPath AI currently supports technical fields only.',
+  match:'Readiness for your target role',field:'Field',role:'Target role',strengths:'Your strengths',gaps:'Skill gaps',path:'Your learning path',weeks:'weeks',noReal:'No verified course found on Saudi platforms for this skill yet.',free:'Free',paid:'Paid',
+  sample:'Sample',foot:'Courses come from a reviewed list, Saudi platforms first plus trusted international ones.',chars:'characters',imp:{high:'High priority',medium:'Medium',low:'Low'},types:{course:'Course',book:'Book',docs:'Docs',project:'Project'},lang:'العربية'},
+ ar:{h1:'اكتشف فجوات مهاراتك. وخذ مسارًا بدورات حقيقية.',sub:'ارفع سيرتك الذاتية. يقرأها CareerPath AI ويحدد تخصصك والوظيفة المناسبة لك، ثم يوضح ما ينقصك وأين تتعلمه. وهو مخصص للتخصصات التقنية (البرمجة والبيانات والذكاء الاصطناعي والأمن السيبراني والشبكات) ويرشّح دورات من منصات سعودية.',
+  cv:'سيرتك الذاتية',drop:'اسحب سيرتك الذاتية هنا، أو اضغط للاختيار',drop2:'PDF أو TXT، حتى 3.5 ميجابايت',remove:'إزالة',bigFile:'حجم الملف أكبر من 3.5 ميجابايت.',badType:'اختر ملف PDF أو TXT.',noCv:'أضف ملف سيرتك الذاتية أولًا.',go:'حلّل',demo:'شاهد نتيجة تجريبية',
+  load:'جاري التحليل والبحث عن دورات حقيقية. قد يستغرق حتى دقيقة…',fail:'تعذّر التحليل الآن. حاول مرة أخرى.',unsupported:'تبدو هذه السيرة في تخصص غير تقني',unsupported2:'يدعم CareerPath AI حاليًا التخصصات التقنية فقط.',
+  match:'جاهزيتك للوظيفة المستهدفة',field:'التخصص',role:'الوظيفة المستهدفة',strengths:'نقاط قوتك',gaps:'فجوات المهارات',path:'مسارك التعليمي',weeks:'أسابيع',noReal:'ما لقيت دورة موثّقة في المنصات السعودية لهذه المهارة بعد.',free:'مجاني',paid:'مدفوع',
+  sample:'تجريبي',foot:'الدورات من قائمة مراجَعة: المنصات السعودية أولًا، مع منصات عالمية موثوقة.',chars:'حرفًا',imp:{high:'أولوية عالية',medium:'متوسطة',low:'منخفضة'},types:{course:'دورة',book:'كتاب',docs:'توثيق',project:'مشروع'},lang:'English'}
+};
+const DEMO={field:'Information technology',targetRole:'Junior web developer',matchPercent:64,summary:'',strengths:['HTML and CSS','JavaScript basics','Team projects'],
+ gaps:[
+  {skill:'SQL and databases',importance:'high',why:'The role asks for writing queries and designing tables.',resources:[
+    {title:'Sample course',provider:'Rwaq',url:'https://www.rwaq.org',type:'course',free:true}]},
+  {skill:'React',importance:'medium',why:'The team builds its interfaces with React.',resources:[
+    {title:'Sample program',provider:'Doroob',url:'https://doroob.sa',type:'course',free:true}]},
+  {skill:'Testing',importance:'low',why:'Mentioned as a plus.',resources:[]}],
+ path:[{step:1,skill:'SQL and databases',action:'Finish a beginner course, then design a small schema',weeks:4},{step:2,skill:'React',action:'Build one small app with components and state',weeks:5},{step:3,skill:'Testing',action:'Add basic tests to that app',weeks:2}]};
+const $=id=>document.getElementById(id);
+let lang=(navigator.language||'').startsWith('ar')?'ar':'en';
+const T=()=>I18N[lang];
+function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function applyLang(){
+  document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  $('t-h1').textContent=T().h1;$('t-sub').textContent=T().sub;$('t-cv').textContent=T().cv;
+  $('t-drop').textContent=T().drop;$('t-drop2').textContent=T().drop2;$('fx').textContent=T().remove;$('go').textContent=T().go;$('demo').textContent=T().demo;
+  $('t-load').textContent=T().load;$('t-foot').textContent=T().foot;$('lang').textContent=T().lang;counts();
+  if(lastResult)render(lastResult.data,lastResult.sample);
+}
+function counts(){}
+let lastResult=null;
+function render(d,sample){
+  lastResult={data:d,sample};const R=$('result');R.replaceChildren();
+  const top=el('div','top-res');const ring=el('div','ring');ring.style.setProperty('--p',Math.max(0,Math.min(100,d.matchPercent||0)));ring.appendChild(el('span',null,(d.matchPercent||0)+'%'));
+  const info=el('div');const h=el('h2',null,T().match);if(sample)h.appendChild(el('span','badge',T().sample));info.appendChild(h);
+  if(d.field||d.targetRole){const fr=el('p',null,[d.field?T().field+': '+d.field:'',d.targetRole?T().role+': '+d.targetRole:''].filter(Boolean).join(' · '));fr.style.fontWeight='600';info.appendChild(fr)}
+  if(d.summary)info.appendChild(el('p',null,d.summary));
+  const chips=el('div','chips');(d.strengths||[]).forEach(s=>chips.appendChild(el('span','chip',s)));info.appendChild(chips);
+  top.append(ring,info);R.appendChild(top);
+  R.appendChild(el('h3','sec',T().gaps));
+  (d.gaps||[]).forEach(g=>{
+    const box=el('div','gap');const hd=el('div','gap-h');hd.appendChild(el('b',null,g.skill));hd.appendChild(el('span','imp '+g.importance,T().imp[g.importance]||g.importance));box.appendChild(hd);
+    if(g.why)box.appendChild(el('p',null,g.why));
+    if(g.resources&&g.resources.length){const ul=el('ul','res');g.resources.forEach(r=>{
+      if(!/^https:\/\//i.test(r.url))return;
+      const li=el('li');const a=el('a');a.href=r.url;a.target='_blank';a.rel='noopener noreferrer';
+      a.appendChild(el('b',null,r.title));a.appendChild(el('small',null,r.provider));
+      a.appendChild(el('span','tag',T().types[r.type]||r.type));a.appendChild(el('span','tag',r.free?T().free:T().paid));li.appendChild(a);ul.appendChild(li)});box.appendChild(ul)}
+    else box.appendChild(el('p','noreal',T().noReal));
+    R.appendChild(box)});
+  R.appendChild(el('h3','sec',T().path));
+  const ol=el('ol','path');(d.path||[]).forEach(p=>{const li=el('li');li.appendChild(el('div','n',String(p.step)));
+    const b=el('div');b.appendChild(el('b',null,p.skill));b.appendChild(document.createElement('br'));b.appendChild(el('span',null,p.action+' · '+p.weeks+' '+T().weeks));li.appendChild(b);ol.appendChild(li)});
+  R.appendChild(ol);R.hidden=false;
+}
+function showErr(m){$('err').textContent=m;$('err').hidden=false}
+$('lang').onclick=()=>{lang=lang==='ar'?'en':'ar';applyLang()};
+const MAX_BYTES=3.5*1024*1024;let cvFile=null;
+function setFile(f){
+  $('err').hidden=true;
+  if(!f){cvFile=null;$('fileinfo').hidden=true;$('cvfile').value='';return}
+  const isPdf=f.type==='application/pdf'||/\.pdf$/i.test(f.name),isTxt=f.type==='text/plain'||/\.txt$/i.test(f.name);
+  if(!isPdf&&!isTxt)return showErr(T().badType);
+  if(f.size>MAX_BYTES)return showErr(T().bigFile);
+  cvFile={file:f,isPdf};$('fname').textContent=f.name+' ('+Math.max(1,Math.round(f.size/1024))+' KB)';$('fileinfo').hidden=false;
+}
+$('cvfile').onchange=e=>setFile(e.target.files[0]);
+$('fx').onclick=()=>setFile(null);
+const dz=$('drop');
+['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('over')}));
+dz.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)setFile(f)});
+dz.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('cvfile').click()}});
+function toBase64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(file)})}
+$('demo').onclick=()=>{$('err').hidden=true;render(DEMO,true);$('result').scrollIntoView({behavior:'smooth',block:'start'})};
+$('go').onclick=async()=>{
+  $('err').hidden=true;
+  if(!cvFile)return showErr(T().noCv);
+  $('go').disabled=true;$('loading').classList.add('on');
+  try{
+    const payload={lang};
+    if(cvFile.isPdf)payload.cvFile={name:cvFile.file.name,mime:'application/pdf',data:await toBase64(cvFile.file)};
+    else payload.cvText=(await cvFile.file.text()).slice(0,15000);
+    const r=await fetch('/.netlify/functions/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const data=await r.json();if(!r.ok)throw new Error(data.error||'fail');
+    if(data.supported===false){showErr(T().unsupported+(data.field?' ('+data.field+')':'')+'. '+T().unsupported2);return}
+    render(data,false);$('result').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){showErr(T().fail)}
+  finally{$('go').disabled=false;$('loading').classList.remove('on')}
+};
+applyLang();
+</script>
+</body>
+</html>
