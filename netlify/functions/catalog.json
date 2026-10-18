@@ -1,0 +1,605 @@
+[
+ {
+  "id": "doroob-cyber",
+  "title": "الأمن السيبراني",
+  "platform": "Doroob",
+  "url": "https://lms.doroob.sa/courses/course-v1:Doroob+C.S-CSCIN003+MAR2021/about?lang=ar",
+  "tags": [
+   "cybersecurity",
+   "security basics"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "doroob-web",
+  "title": "تطوير تطبيقات الويب",
+  "platform": "Doroob",
+  "url": "https://lms.doroob.sa/courses/Doroob/C.S-INTEC009/SEP2020/about",
+  "tags": [
+   "web development",
+   "web applications"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "doroob-cloud",
+  "title": "الحوسبة السحابية",
+  "platform": "Doroob",
+  "url": "https://lms.doroob.sa/courses/Doroob/C.S-INTEC008/SEP2020/about?lang=ar",
+  "tags": [
+   "cloud",
+   "cloud security"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "doroob-infosec",
+  "title": "أمن المعلومات",
+  "platform": "Doroob",
+  "url": "https://lms.doroob.sa/courses/doroob/stc101/Ar_2018/about?lang=ar",
+  "tags": [
+   "information security",
+   "cybersecurity"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "doroob-bigdata",
+  "title": "البيانات الضخمة",
+  "platform": "Doroob",
+  "url": "https://lms.doroob.sa/courses/Doroob/C.S-INTEC006/APR2020/about",
+  "tags": [
+   "big data",
+   "data"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "rwaq-python-ds",
+  "title": "مدخل إلى علم البيانات باستخدام Python (المستوى الأول)",
+  "platform": "Rwaq",
+  "url": "https://www.rwaq.org/courses/sea_python_level1",
+  "tags": [
+   "python",
+   "data science"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "ended",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "rwaq-intro-prog",
+  "title": "مقدمة إلى برمجة الحاسب باستخدام لغة Python",
+  "platform": "Rwaq",
+  "url": "https://www.rwaq.org/courses/introduction-to-programming",
+  "tags": [
+   "python",
+   "programming basics"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "rwaq-pentest",
+  "title": "مقدمة في اختبار الاختراق - كالي لينكس",
+  "platform": "Rwaq",
+  "url": "https://www.rwaq.org/courses/penetration-kali-linux",
+  "tags": [
+   "penetration testing",
+   "cybersecurity",
+   "linux"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "rwaq-networks",
+  "title": "مبادئ شبكات الحاسب الآلي",
+  "platform": "Rwaq",
+  "url": "https://www.rwaq.org/courses/principles-of-networks-takaful",
+  "tags": [
+   "networks"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "rwaq-laravel",
+  "title": "تعلم أساسيات إطار العمل Laravel",
+  "platform": "Rwaq",
+  "url": "https://www.rwaq.org/courses/laravel",
+  "tags": [
+   "php",
+   "laravel",
+   "backend"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "rwaq-datascience",
+  "title": "مقدمة في علم البيانات الاحترافي",
+  "platform": "Rwaq",
+  "url": "https://www.rwaq.org/courses/data-science",
+  "tags": [
+   "data science"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "tuwaiq-react",
+  "title": "برنامج أساسيات تطوير الواجهات الأمامية بواسطة React",
+  "platform": "Tuwaiq",
+  "url": "https://tuwaiq.edu.sa/bootcamp/8WNmJro2/view",
+  "tags": [
+   "react",
+   "front-end",
+   "javascript"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "exists",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "tuwaiq-react-dyn",
+  "title": "برنامج بناء المواقع الديناميكية والتفاعلية باستخدام React Js",
+  "platform": "Tuwaiq",
+  "url": "https://tuwaiq.edu.sa/bootcamp/3ZQOAar1/view",
+  "tags": [
+   "react",
+   "front-end"
+  ],
+  "level": "intermediate",
+  "lang": "ar",
+  "status": "exists",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "tuwaiq-js",
+  "title": "معسكر بناء تطبيقات ومواقع الويب باستخدام JavaScript",
+  "platform": "Tuwaiq",
+  "url": "https://tuwaiq.edu.sa/bootcamp/orkZ6kVb/view",
+  "tags": [
+   "javascript",
+   "web development"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "exists",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "tuwaiq-uiux",
+  "title": "برنامج تصميم واجهة وتجربة المستخدم UI/UX",
+  "platform": "Tuwaiq",
+  "url": "https://tuwaiq.edu.sa/bootcamp/eNaXxaJk/view",
+  "tags": [
+   "ui/ux",
+   "design"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "exists",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "tuwaiq-ds-ai",
+  "title": "معسكر علوم البيانات والذكاء الاصطناعي T5",
+  "platform": "Tuwaiq",
+  "url": "https://tuwaiq.edu.sa/bootcamp/Rl7NB7Po/view",
+  "tags": [
+   "data science",
+   "ai",
+   "machine learning",
+   "python"
+  ],
+  "level": "intermediate",
+  "lang": "ar",
+  "status": "exists",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "sda-python",
+  "title": "معسكر تطوير البرمجيات باستخدام Python",
+  "platform": "SDA",
+  "url": "https://sda.edu.sa/ar/bootcamp/197",
+  "tags": [
+   "python",
+   "software development"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "sda-csharp",
+  "title": "معسكر تطوير البرمجيات باستخدام C#",
+  "platform": "SDA",
+  "url": "https://sda.edu.sa/ar/bootcamp/167",
+  "tags": [
+   "c#",
+   "software development",
+   ".net"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "sda-azure",
+  "title": "معسكر الحوسبة السحابية باستخدام Microsoft Azure",
+  "platform": "SDA",
+  "url": "https://sda.edu.sa/ar/bootcamp/215",
+  "tags": [
+   "cloud",
+   "azure"
+  ],
+  "level": "intermediate",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "sda-bi",
+  "title": "معسكر ذكاء الأعمال Business Intelligence",
+  "platform": "SDA",
+  "url": "https://sda.edu.sa/ar/bootcamp/172",
+  "tags": [
+   "business intelligence",
+   "data analysis",
+   "power bi"
+  ],
+  "level": "intermediate",
+  "lang": "ar",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "misk-frontend",
+  "title": "Front End Development",
+  "platform": "Misk",
+  "url": "https://hub.misk.org.sa/programs/skills/front-end-development",
+  "tags": [
+   "html",
+   "css",
+   "javascript",
+   "react",
+   "git",
+   "front-end"
+  ],
+  "level": "beginner",
+  "lang": "ar",
+  "status": "ended",
+  "verified": "2026-10-19",
+  "region": "sa"
+ },
+ {
+  "id": "misk-ai-intro",
+  "title": "Introduction to Artificial Intelligence (AI)",
+  "platform": "Misk",
+  "url": "https://hub.misk.org.sa/programs/skills/introduction-to-artificial-intelligence-ai/",
+  "tags": [
+   "ai"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "misk-ds-ai",
+  "title": "Data Science and Artificial Intelligence",
+  "platform": "Misk",
+  "url": "https://hub.misk.org.sa/programs/skills/data-science-and-machine-learning/",
+  "tags": [
+   "data science",
+   "machine learning",
+   "ai"
+  ],
+  "level": "intermediate",
+  "lang": "en",
+  "status": "unchecked",
+  "verified": null,
+  "region": "sa"
+ },
+ {
+  "id": "cs50-python",
+  "title": "CS50's Introduction to Programming with Python",
+  "platform": "Harvard CS50",
+  "url": "https://cs50.harvard.edu/python/",
+  "tags": [
+   "python",
+   "programming basics"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "cs50-web",
+  "title": "CS50's Web Programming with Python and JavaScript",
+  "platform": "Harvard CS50",
+  "url": "https://cs50.harvard.edu/web/",
+  "tags": [
+   "web development",
+   "python",
+   "javascript",
+   "django",
+   "backend"
+  ],
+  "level": "intermediate",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "cs50-sql",
+  "title": "CS50's Introduction to Databases with SQL",
+  "platform": "Harvard CS50",
+  "url": "https://cs50.harvard.edu/sql/",
+  "tags": [
+   "sql",
+   "databases"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "cs50-cyber",
+  "title": "CS50's Introduction to Cybersecurity",
+  "platform": "Harvard CS50",
+  "url": "https://cs50.harvard.edu/cybersecurity/",
+  "tags": [
+   "cybersecurity",
+   "security basics"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "fcc",
+  "title": "freeCodeCamp curriculum",
+  "platform": "freeCodeCamp",
+  "url": "https://www.freecodecamp.org/learn/",
+  "tags": [
+   "web development",
+   "javascript",
+   "html",
+   "css",
+   "python",
+   "front-end"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "mdn-web",
+  "title": "Learn web development",
+  "platform": "MDN Web Docs",
+  "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development",
+  "tags": [
+   "html",
+   "css",
+   "javascript",
+   "web development",
+   "front-end"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "kaggle-learn",
+  "title": "Kaggle Learn (Python, Pandas, data viz)",
+  "platform": "Kaggle",
+  "url": "https://www.kaggle.com/learn",
+  "tags": [
+   "python",
+   "pandas",
+   "data analysis",
+   "data visualization",
+   "machine learning"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "react-learn",
+  "title": "Quick Start (React docs)",
+  "platform": "React",
+  "url": "https://react.dev/learn",
+  "tags": [
+   "react",
+   "front-end",
+   "javascript"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "sqlbolt",
+  "title": "SQLBolt: Learn SQL with interactive lessons",
+  "platform": "SQLBolt",
+  "url": "https://sqlbolt.com/",
+  "tags": [
+   "sql",
+   "databases"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "odin",
+  "title": "The Odin Project: full stack web development",
+  "platform": "The Odin Project",
+  "url": "https://www.theodinproject.com/",
+  "tags": [
+   "web development",
+   "javascript",
+   "react",
+   "node",
+   "full stack",
+   "git"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "mslearn",
+  "title": "Microsoft Learn training",
+  "platform": "Microsoft Learn",
+  "url": "https://learn.microsoft.com/en-us/training/",
+  "tags": [
+   "azure",
+   "cloud",
+   ".net",
+   "c#",
+   "power bi",
+   "devops"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "netacad",
+  "title": "Cisco Networking Academy",
+  "platform": "Cisco NetAcad",
+  "url": "https://www.netacad.com/",
+  "tags": [
+   "networks",
+   "cybersecurity",
+   "python",
+   "linux"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "git-book",
+  "title": "Pro Git book",
+  "platform": "Git",
+  "url": "https://git-scm.com/book/en/v2",
+  "tags": [
+   "git",
+   "version control"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ },
+ {
+  "id": "docker-start",
+  "title": "Get started with Docker",
+  "platform": "Docker Docs",
+  "url": "https://docs.docker.com/get-started/",
+  "tags": [
+   "docker",
+   "devops",
+   "containers"
+  ],
+  "level": "beginner",
+  "lang": "en",
+  "status": "open",
+  "verified": "2026-10-19",
+  "region": "intl",
+  "free": true
+ }
+]
