@@ -148,31 +148,40 @@ async function run({ cvText, cvFile, lang }, { apiKey, fetchImpl = fetch } = {})
   return keepRealLinks(parsed, searchedUrls(data.content || []), fetchImpl);
 }
 
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') return json(405, { error: 'Use POST' });
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return json(500, { error: 'Server is missing ANTHROPIC_API_KEY' });
+// Validates the request body. Returns { cvText, cvFile, lang } or { error, status }.
+function parseRequest(raw) {
   let body;
-  try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { error: 'Invalid JSON' }); }
+  try { body = JSON.parse(raw || '{}'); } catch { return { status: 400, error: 'Invalid JSON' }; }
   let cvText = '';
   let cvFile = null;
   if (body.cvFile) {
     const data = String(body.cvFile.data || '');
     const bytes = Buffer.from(data, 'base64');
-    if (body.cvFile.mime !== 'application/pdf' || bytes.slice(0, 4).toString() !== '%PDF') return json(400, { error: 'Only PDF files are supported' });
-    if (bytes.length > MAX_PDF_BYTES) return json(400, { error: 'File is too large' });
+    if (body.cvFile.mime !== 'application/pdf' || bytes.slice(0, 4).toString() !== '%PDF') return { status: 400, error: 'Only PDF files are supported' };
+    if (bytes.length > MAX_PDF_BYTES) return { status: 400, error: 'File is too large' };
     cvFile = { data };
   } else {
     cvText = String(body.cvText || '').trim();
-    if (cvText.length < 50) return json(400, { error: 'CV is too short' });
-    if (cvText.length > MAX_CV) return json(400, { error: 'Text is too long' });
+    if (cvText.length < 50) return { status: 400, error: 'CV is too short' };
+    if (cvText.length > MAX_CV) return { status: 400, error: 'Text is too long' };
   }
+  return { cvText, cvFile, lang: body.lang === 'ar' ? 'ar' : 'en', jobId: body.jobId };
+}
+
+exports.handler = async (event) => {
+  if (event.httpMethod !== 'POST') return json(405, { error: 'Use POST' });
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) return json(500, { error: 'Server is missing ANTHROPIC_API_KEY' });
+  const req = parseRequest(event.body);
+  if (req.error) return json(req.status, { error: req.error });
   try {
-    return json(200, await run({ cvText, cvFile, lang: body.lang }, { apiKey }));
+    return json(200, await run(req, { apiKey }));
   } catch (e) {
     console.error('[analyze] failed:', e && e.message);
     return json(502, { error: 'Analysis failed, please try again', detail: process.env.NETLIFY_DEV ? String(e && e.message) : undefined });
   }
 };
 
+exports.run = run;
+exports.parseRequest = parseRequest;
 exports._test = { CATALOG, extractJson, searchedUrls, normalize, keepRealLinks, run, buildContent, isSaudiDomain };
