@@ -124,12 +124,12 @@
 const I18N={
  en:{h1:'Find your skill gaps. Get a path with real courses.',sub:'Upload your CV. CareerPath AI reads it, works out your field and the role you can aim for, and shows what is missing and where to learn it. It is built for technical fields (software, data, AI, cybersecurity, networks) and recommends courses from Saudi platforms.',
   cv:'Your CV',drop:'Drop your CV here, or click to choose',drop2:'PDF or TXT, up to 3.5 MB',remove:'Remove',bigFile:'This file is larger than 3.5 MB.',badType:'Please choose a PDF or TXT file.',noCv:'Please add your CV file first.',go:'Analyze',demo:'See a sample result',
-  load:'Analyzing and searching for real courses. This can take up to a minute…',fail:'Could not analyze right now. Please try again.',unsupported:'This CV looks like it is in a non-technical field',unsupported2:'CareerPath AI currently supports technical fields only.',
+  load:'Analyzing and searching for real courses. This can take up to a minute…',fail:'Could not analyze right now. Please try again.',unsupported:'This CV looks like it is in a non-technical field',unsupported2:'CareerPath AI currently supports technical fields only.',limit:'The daily limit has been reached. Please try again tomorrow.',
   match:'Readiness for your target role',field:'Field',role:'Target role',strengths:'Your strengths',gaps:'Skill gaps',path:'Your learning path',weeks:'weeks',noReal:'No verified course found on Saudi platforms for this skill yet.',free:'Free',paid:'Paid',
   sample:'Sample',foot:'Courses come from a reviewed list, Saudi platforms first plus trusted international ones.',chars:'characters',imp:{high:'High priority',medium:'Medium',low:'Low'},types:{course:'Course',book:'Book',docs:'Docs',project:'Project'},lang:'العربية'},
  ar:{h1:'اكتشف فجوات مهاراتك. وخذ مسارًا بدورات حقيقية.',sub:'ارفع سيرتك الذاتية. يقرأها CareerPath AI ويحدد تخصصك والوظيفة المناسبة لك، ثم يوضح ما ينقصك وأين تتعلمه. وهو مخصص للتخصصات التقنية (البرمجة والبيانات والذكاء الاصطناعي والأمن السيبراني والشبكات) ويرشّح دورات من منصات سعودية.',
   cv:'سيرتك الذاتية',drop:'اسحب سيرتك الذاتية هنا، أو اضغط للاختيار',drop2:'PDF أو TXT، حتى 3.5 ميجابايت',remove:'إزالة',bigFile:'حجم الملف أكبر من 3.5 ميجابايت.',badType:'اختر ملف PDF أو TXT.',noCv:'أضف ملف سيرتك الذاتية أولًا.',go:'حلّل',demo:'شاهد نتيجة تجريبية',
-  load:'جاري التحليل والبحث عن دورات حقيقية. قد يستغرق حتى دقيقة…',fail:'تعذّر التحليل الآن. حاول مرة أخرى.',unsupported:'تبدو هذه السيرة في تخصص غير تقني',unsupported2:'يدعم CareerPath AI حاليًا التخصصات التقنية فقط.',
+  load:'جاري التحليل والبحث عن دورات حقيقية. قد يستغرق حتى دقيقة…',fail:'تعذّر التحليل الآن. حاول مرة أخرى.',unsupported:'تبدو هذه السيرة في تخصص غير تقني',unsupported2:'يدعم CareerPath AI حاليًا التخصصات التقنية فقط.',limit:'تم الوصول إلى الحد اليومي للاستخدام. حاول مرة أخرى غدًا.',
   match:'جاهزيتك للوظيفة المستهدفة',field:'التخصص',role:'الوظيفة المستهدفة',strengths:'نقاط قوتك',gaps:'فجوات المهارات',path:'مسارك التعليمي',weeks:'أسابيع',noReal:'ما لقيت دورة موثّقة في المنصات السعودية لهذه المهارة بعد.',free:'مجاني',paid:'مدفوع',
   sample:'تجريبي',foot:'الدورات من قائمة مراجَعة: المنصات السعودية أولًا، مع منصات عالمية موثوقة.',chars:'حرفًا',imp:{high:'أولوية عالية',medium:'متوسطة',low:'منخفضة'},types:{course:'دورة',book:'كتاب',docs:'توثيق',project:'مشروع'},lang:'English'}
 };
@@ -190,7 +190,7 @@ function setFile(f){
   cvFile={file:f,isPdf};$('fname').textContent=f.name+' ('+Math.max(1,Math.round(f.size/1024))+' KB)';$('fileinfo').hidden=false;
 }
 $('cvfile').onchange=e=>setFile(e.target.files[0]);
-$('fx').onclick=()=>setFile(null);
+$('fx').onclick=()=>{setFile(null);lastResult=null;$('result').replaceChildren();$('result').hidden=true};
 const dz=$('drop');
 ['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('over')}));
 ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('over')}));
@@ -198,6 +198,18 @@ dz.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)setFile(f)})
 dz.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('cvfile').click()}});
 function toBase64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(file)})}
 $('demo').onclick=()=>{$('err').hidden=true;render(DEMO,true);$('result').scrollIntoView({behavior:'smooth',block:'start'})};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function waitForJob(id){
+  const until=Date.now()+4*60*1000;
+  while(Date.now()<until){
+    await sleep(2500);
+    let j;
+    try{const r=await fetch('/.netlify/functions/status?id='+encodeURIComponent(id),{cache:'no-store'});if(!r.ok)continue;j=await r.json()}catch(e){continue}
+    if(j.status==='done')return j.result;
+    if(j.status==='error')throw new Error(j.code==='limit'?'limit':'failed');
+  }
+  throw new Error('timeout');
+}
 $('go').onclick=async()=>{
   $('err').hidden=true;
   if(!cvFile)return showErr(T().noCv);
@@ -206,11 +218,13 @@ $('go').onclick=async()=>{
     const payload={lang};
     if(cvFile.isPdf)payload.cvFile={name:cvFile.file.name,mime:'application/pdf',data:await toBase64(cvFile.file)};
     else payload.cvText=(await cvFile.file.text()).slice(0,15000);
-    const r=await fetch('/.netlify/functions/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    const data=await r.json();if(!r.ok)throw new Error(data.error||'fail');
+    payload.jobId=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2)+'-job');
+    const start=await fetch('/.netlify/functions/analyze-background',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(start.status!==202&&!start.ok)throw new Error('start');
+    const data=await waitForJob(payload.jobId);
     if(data.supported===false){showErr(T().unsupported+(data.field?' ('+data.field+')':'')+'. '+T().unsupported2);return}
     render(data,false);$('result').scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(e){showErr(T().fail)}
+  }catch(e){showErr(e&&e.message==='limit'?T().limit:T().fail)}
   finally{$('go').disabled=false;$('loading').classList.remove('on')}
 };
 applyLang();
