@@ -116,8 +116,14 @@ async function keepRealLinks(result, found, fetchImpl) {
   return result;
 }
 
-function buildContent({ cvText, cvFile, lang }) {
+function buildContent({ cvText, cvFile, cvImages, lang }) {
   const intro = `Language: ${lang === 'ar' ? 'Arabic' : 'English'}\n\n`;
+  if (cvImages && cvImages.length) {
+    return [
+      { type: 'text', text: intro + 'The CV is in the attached page images (in order).' },
+      ...cvImages.map((data) => ({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data } })),
+    ];
+  }
   if (cvFile) {
     return [
       { type: 'text', text: intro + 'The CV is the attached PDF.' },
@@ -127,7 +133,7 @@ function buildContent({ cvText, cvFile, lang }) {
   return `${intro}CV:\n${cvText}`;
 }
 
-async function run({ cvText, cvFile, lang }, { apiKey, fetchImpl = fetch } = {}) {
+async function run({ cvText, cvFile, cvImages, lang }, { apiKey, fetchImpl = fetch } = {}) {
   const res = await fetchImpl(API_URL, {
     method: 'POST',
     headers: { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
@@ -136,7 +142,7 @@ async function run({ cvText, cvFile, lang }, { apiKey, fetchImpl = fetch } = {})
       max_tokens: 2500,
       system: SYSTEM(),
       ...(SEARCH ? { tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 2, allowed_domains: DOMAINS }] } : {}),
-      messages: [{ role: 'user', content: buildContent({ cvText, cvFile, lang }) }],
+      messages: [{ role: 'user', content: buildContent({ cvText, cvFile, cvImages, lang }) }],
     }),
   });
   if (!res.ok) throw new Error(`Claude API ${res.status}: ${(await res.text().catch(() => '')).slice(0, 400)}`);
@@ -154,7 +160,11 @@ function parseRequest(raw) {
   try { body = JSON.parse(raw || '{}'); } catch { return { status: 400, error: 'Invalid JSON' }; }
   let cvText = '';
   let cvFile = null;
-  if (body.cvFile) {
+  let cvImages = null;
+  if (Array.isArray(body.cvImages) && body.cvImages.length) {
+    cvImages = body.cvImages.slice(0, 3).map(String);
+    if (cvImages.some((d) => !/^[A-Za-z0-9+/=]+$/.test(d) || d.length > 400000)) return { status: 400, error: 'Bad images' };
+  } else if (body.cvFile) {
     const data = String(body.cvFile.data || '');
     const bytes = Buffer.from(data, 'base64');
     if (body.cvFile.mime !== 'application/pdf' || bytes.slice(0, 4).toString() !== '%PDF') return { status: 400, error: 'Only PDF files are supported' };
@@ -165,7 +175,7 @@ function parseRequest(raw) {
     if (cvText.length < 50) return { status: 400, error: 'CV is too short' };
     if (cvText.length > MAX_CV) return { status: 400, error: 'Text is too long' };
   }
-  return { cvText, cvFile, lang: body.lang === 'ar' ? 'ar' : 'en', jobId: body.jobId };
+  return { cvText, cvFile, cvImages, lang: body.lang === 'ar' ? 'ar' : 'en', jobId: body.jobId };
 }
 
 exports.handler = async (event) => {
