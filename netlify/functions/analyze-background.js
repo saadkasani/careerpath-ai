@@ -23,16 +23,21 @@ async function process_(req, headers, { jobs, limits, apiKey, runFn = run }) {
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: '' };
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  const { jobs, limits } = stores(event);
-  let req = parseRequest(event.body);
-  const id = (() => { try { return JSON.parse(event.body).jobId; } catch { return null; } })();
-  if (!id || !ID.test(String(id))) return { statusCode: 400, body: '' };
-  if (req.error) { await jobs.setJSON(id, { status: 'error', code: 'bad', message: req.error }); return { statusCode: 400, body: '' }; }
-  req = { ...req, jobId: id };
-  if (!apiKey) { await jobs.setJSON(id, { status: 'error', code: 'failed' }); return { statusCode: 500, body: '' }; }
-  await process_(req, event.headers, { jobs, limits, apiKey });
-  return { statusCode: 200, body: '' };
+  try {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    const { jobs, limits } = stores(event);
+    let req = parseRequest(event.body);
+    const id = (() => { try { return JSON.parse(event.body).jobId; } catch { return null; } })();
+    if (!id || !ID.test(String(id))) return { statusCode: 400, body: 'bad job id' };
+    if (req.error) { await jobs.setJSON(id, { status: 'error', code: 'bad', message: req.error }); return { statusCode: 400, body: String(req.error) }; }
+    req = { ...req, jobId: id };
+    if (!apiKey) { await jobs.setJSON(id, { status: 'error', code: 'failed' }); return { statusCode: 500, body: 'ANTHROPIC_API_KEY is missing' }; }
+    await process_(req, event.headers, { jobs, limits, apiKey });
+    return { statusCode: 200, body: '' };
+  } catch (e) {
+    console.error('[analyze-background] crashed:', e && e.message);
+    return { statusCode: 500, body: 'crashed: ' + String((e && e.message) || e).slice(0, 200) };
+  }
 };
 
 exports._test = { process_ };
