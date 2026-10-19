@@ -3,5 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "Compares a CV with a job description, finds skill gaps, and suggests a learning path with verified real links.",
-  "scripts": { "test": "node test/analyze.test.js" }
+  "scripts": {
+    "test": "node test/analyze.test.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.4"
+  }
 }
