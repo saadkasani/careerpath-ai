@@ -206,6 +206,21 @@ async function loadPdfJs(){
   window.pdfjsLib.GlobalWorkerOptions.workerSrc=base+'pdf.worker.min.js';
   return window.pdfjsLib;
 }
+async function pdfToImages(file){
+  const lib=await loadPdfJs();
+  const doc=await lib.getDocument({data:await file.arrayBuffer()}).promise;
+  const out=[];
+  for(let i=1;i<=Math.min(doc.numPages,3);i++){
+    const page=await doc.getPage(i);
+    const v0=page.getViewport({scale:1});
+    const v=page.getViewport({scale:Math.min(1.6,1100/v0.width)});
+    const c=document.createElement('canvas');c.width=v.width;c.height=v.height;
+    const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);
+    await page.render({canvasContext:ctx,viewport:v}).promise;
+    out.push(c.toDataURL('image/jpeg',0.6).split(',')[1]);
+  }
+  return out;
+}
 async function pdfToText(file){
   const lib=await loadPdfJs();
   const doc=await lib.getDocument({data:await file.arrayBuffer()}).promise;
@@ -235,9 +250,13 @@ $('go').onclick=async()=>{
   try{
     const payload={lang};
     let cvText;
-    if(cvFile.isPdf){cvText=await pdfToText(cvFile.file);if(cvText.length<200)throw new Error('notext')}
+    if(cvFile.isPdf){cvText=await pdfToText(cvFile.file)}
     else cvText=await cvFile.file.text();
-    payload.cvText=cvText.slice(0,15000);
+    if(cvFile.isPdf&&cvText.length<200){
+      const imgs=await pdfToImages(cvFile.file);
+      if(imgs.join('').length>230000)throw new Error('notext');
+      payload.cvImages=imgs;
+    }else payload.cvText=cvText.slice(0,15000);
     payload.jobId=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2)+'-job');
     const start=await fetch('/.netlify/functions/analyze-background',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     if(start.status!==202&&!start.ok){let t='';try{t=(await start.text()).slice(0,120)}catch(_){}throw new Error('start '+start.status+' '+t)}
