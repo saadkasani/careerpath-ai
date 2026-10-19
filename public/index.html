@@ -206,7 +206,7 @@ async function waitForJob(id){
     let j;
     try{const r=await fetch('/.netlify/functions/status?id='+encodeURIComponent(id),{cache:'no-store'});if(!r.ok)continue;j=await r.json()}catch(e){continue}
     if(j.status==='done')return j.result;
-    if(j.status==='error')throw new Error(j.code==='limit'?'limit':'failed');
+    if(j.status==='error')throw new Error(j.code==='limit'?'limit':'job '+(j.code||'failed'));
   }
   throw new Error('timeout');
 }
@@ -220,11 +220,11 @@ $('go').onclick=async()=>{
     else payload.cvText=(await cvFile.file.text()).slice(0,15000);
     payload.jobId=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2)+'-job');
     const start=await fetch('/.netlify/functions/analyze-background',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    if(start.status!==202&&!start.ok)throw new Error('start');
+    if(start.status!==202&&!start.ok){let t='';try{t=(await start.text()).slice(0,120)}catch(_){}throw new Error('start '+start.status+' '+t)}
     const data=await waitForJob(payload.jobId);
     if(data.supported===false){showErr(T().unsupported+(data.field?' ('+data.field+')':'')+'. '+T().unsupported2);return}
     render(data,false);$('result').scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(e){showErr(e&&e.message==='limit'?T().limit:T().fail)}
+  }catch(e){showErr(e&&e.message==='limit'?T().limit:T().fail+' ['+String((e&&e.message)||e).slice(0,160)+']')}
   finally{$('go').disabled=false;$('loading').classList.remove('on')}
 };
 applyLang();
